@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SqlMap.User">
+
+    <!--二级缓存开关，每个mapper里面都要单独开启，总配置文件里面也要打开二级缓存总开关-->
+    <cache />
+
+    <!--#{}为占位符，parameterType为id的类型，resultType为返回值类型，查询结果自动封装进类里面
+      id为唯一标识符，调用时用到-->
+    <select id="getStudent" parameterType="String" resultType="Bean.Student">
+        select * from Student where userId = #{id}
+    </select>
+
+    <!--ResultMap定义，自定义映射，实现高级映射
+        type:resultMap映射的java类型
+        id:resultMap的唯一标识-->
+    <resultMap id="userResultMap" type="Bean.Student">
+        <!--column:查询出的列名，property：type指定的pojo类型中的属性名 id主键的定义，result为普通列的的定仪-->
+        <id column="userId_" property="userId"/>
+        <result column="password_" property="password"/>
+        <result column="name_" property="name"/>
+
+        <!--关联查询时，pojo里面放其他对象类型实现关联查询映射，property为对象名称，javaType为对象类型-->
+        <!--<association property="student" javaType="Bean.Student">-->
+            <!--<id/>-->
+            <!--<result/>-->
+        <!--</association>-->
+
+        <!--一对多查询时，把属性存入pojo集合 ofType为集合里面存的变量类型-->
+        <!--<collection property="listName" ofType="listObject">-->
+            <!--<id/>-->
+            <!--<result/>-->
+            <!--&lt;!&ndash;多对多时嵌套collection&ndash;&gt;-->
+            <!--<collection property="listName" ofType="listObject">-->
+                <!--<id/>-->
+                <!--<result/>-->
+            <!--</collection>-->
+        <!--</collection>-->
+    </resultMap>
+
+    <!--查询所有数据-->
+    <select id="getAllStudent"  resultType="Bean.Student">
+        select * from student
+    </select>
+
+    <select id="getAllStudentMap"  resultMap="userResultMap">
+        select userId userId_,password password_,name name_ from student
+    </select>
+
+
+    <!-- 插入时参数类型可以为一个pojo类，values里面用#{属性明}获取对象里面的数据-->
+    <insert id="insertStudent" parameterType="Bean.Student" >
+        <!--对于插入之后需要知道插入的数据的主键值来操作子表，可以调用如下函数，只适用于自增主键-->
+        <!--<selectKey keyProperty="Cid" order="AFTER" resultType="String">-->
+            <!--select LAST_INSERT_ID()-->
+        <!--</selectKey>-->
+        insert into student values(#{userId},#{password},#{name})
+    </insert>
+
+    <delete id="deleteStudent" parameterType="String">
+        delete from student where userId=#{id}
+    </delete>
+
+    <!--<update id="updateStudent" parameterType="Bean.Student">-->
+        <!--select * from student-->
+    <!--</update>-->
+
+    <!--动态sql查询-->
+    <select id="getStudentDynamic" parameterType="String" resultType="Bean.Student">
+        select * from Student
+        <where>
+            <if test="id!=null">
+                or userId=#{id}
+            </if>
+            <if test="id==null">
+                or userId=#{id}
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--
+    Scope属性详解（适用于单个bean的注入）：
+                1，Sinleton：在整个应用程序中，只创建bean的一个实例
+                2，Prototype：每次注入或通过spring上下文获取bean的时候都会创建一个Bean实例
+                3，Session：在web应用中，为每一个会话创建一个bean实例
+                4，request：在web应用中，为每一个request请求创建一个bean实例
+    -->
+    <!--如果是包扫描形式，只需在对应得需要扫描的类前面加上@Scope标签就行了-->
+    <!--lazy-init 延迟加载，在容器启动时并不会加载类对象，只有在需要时才会加载类对象-->
+    <!--destroy-method 指定容器关闭时调用对象的销毁放啊发，init-method 调用初始化方法 -->
+<!--    <bean id="student" class="Bean.C" lazy-init="" scope="" init-method="" destroy-method=""/>-->
+
+    <context:component-scan base-package="Bean,DAO,services" />
+</beans>

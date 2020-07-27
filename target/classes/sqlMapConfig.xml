@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--全局设置-->
+    <settings>
+        <!--延迟加载开关-->
+        <!--<setting name="lazyLoadingEnabled" value="true"/>-->
+        <!--<setting name="aggressiveLazyEnabled" value="false"/>-->
+
+        <!--二级缓存总开关,pojo类需要实现序列化接口为了将缓存数据取出执行反序列化操作，因为二级缓存不一定存在内存-->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <!--定义POJO的别名，xml中的parameterType可以直接使用别名-->
+    <typeAliases>
+        <!--单个定义-->
+        <!--<typeAlias type="Bean.Student" alias="Student"/>-->
+        <!--批量定义-->
+        <package name="Bean"/>
+    </typeAliases>
+
+    <!--<environments default="development">-->
+        <!--<environment id="development">-->
+            <!--<transactionManager type="JDBC" />-->
+            <!--<dataSource type="POOLED">-->
+                <!--<property name="driver" value="com.mysql.jdbc.Driver" />-->
+                <!--<property name="url" value="jdbc:mysql://127.0.0.1:3306/discuss?useUnicode=true&amp;characterEncoding=utf-8" />-->
+                <!--<property name="username" value="root" />-->
+                <!--<property name="password" value="199818" />-->
+            <!--</dataSource>-->
+        <!--</environment>-->
+    <!--</environments>-->
+
+    <mappers>
+        <!-- // power by http://www.yiibai.com -->
+        <!--<mapper resource="SqlMap/User.xml"/>-->
+
+        <!-- 加载映射文件 -->
+        <!-- 这里也可以使用class来加载映射文件，前提是：使用mapper代理的方法，遵循规范，
+        并且两个文件必须同名且在同一目录
+        <mapper class="com.wxisme.mybatis0100.mapper.UserMapper"/>
+        基于class加载，可以进行批量加载
+        -->
+        <!-- 通过扫描包的方式来进行批量加载映射文件 -->
+        <package name="SqlMap"/>
+
+    </mappers>
+</configuration>
